@@ -3,73 +3,84 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     public Sprite squareSprite;  // Sprite của ô vuông
-    public Sprite gemSprite; // Sprite của gem
-    private GameObject _gridParent;  // GameObject chứa tất cả các ô vuông
-    public float spacing = 0.54f; 
+    private GameObject _gridParent;   // Đối tượng chứa các ô vuông
+    public Sprite frame;         // Sprite của khung bên ngoài
+    public float spacing = 0.003f; // Khoảng cách giữa các ô vuông
+    public int tile = 5;         // Tỉ lệ ô vuông
 
     void Start()
     {
-        _gridParent = new GameObject("GridParent");
-        _gridParent.transform.position = Vector3.zero;
-        GenerateGrid(5, 5, 3);
+        GenerateGrid(tile, tile); // Tạo lưới ô vuông
     }
 
-    public void GenerateGrid(int rows, int cols, int gemCount)
+    public void GenerateGrid(int rows, int cols)
     {
-        foreach (Transform child in _gridParent.transform)
+        // Xóa lưới cũ nếu tồn tại
+        if (_gridParent != null)
         {
-            Destroy(child.gameObject);
+            Destroy(_gridParent);
         }
+        _gridParent = new GameObject("GridParent");
 
+        // Tính kích thước của mỗi ô vuông
+        float frameWidth = frame.bounds.size.x;
+        float frameHeight = frame.bounds.size.y;
+
+        // Tính kích thước ô vuông sao cho vừa khung
+        float cellSize = Mathf.Min(
+            (frameWidth - (cols - 1) * spacing) / cols,  // Chiều rộng mỗi ô
+            (frameHeight - (rows - 1) * spacing) / rows  // Chiều cao mỗi ô
+        );
+
+        Debug.Log($"Calculated Cell Size: {cellSize}");
+
+        // Tạo đối tượng khung và điều chỉnh kích thước
+        Vector3 newScale = new Vector3(
+            (cols * cellSize + (cols - 1) * spacing) / frame.bounds.size.x,
+            (rows * cellSize + (rows - 1) * spacing) / frame.bounds.size.y,
+            1
+        );
+
+        GameObject frameObject = new GameObject("Frame");
+        frameObject.layer = 2;
+        SpriteRenderer frameRenderer = frameObject.AddComponent<SpriteRenderer>();
+        frameRenderer.sprite = frame;
+        frameObject.transform.localScale = newScale;
+
+        // Đặt vị trí cố định cho khung tại Vector3(0, 0, 0)
+        frameObject.transform.position = new Vector3(0, 0, 0);
+
+        // Đặt vị trí của _gridParent tại (0, 0, 0)
+        _gridParent.transform.position = new Vector3(0, 0, 0);
+
+        // Tính toán lại vị trí của các ô vuông sao cho khung bao quanh
+        float xOffset = (cols * cellSize + (cols - 1) * spacing) / 2;
+        float yOffset = (rows * cellSize + (rows - 1) * spacing) / 2;
+
+        // Tạo các ô vuông
         for (int row = 0; row < rows; row++)
         {
             for (int col = 0; col < cols; col++)
             {
-                Vector3 position = new Vector3(col * spacing, -row * spacing, 0);
-                GameObject square = new GameObject("Square_" + row + "_" + col);
+                // Vị trí của mỗi ô vuông
+                float xPos = col * (cellSize + spacing) - xOffset + cellSize / 2;
+                float yPos = -row * (cellSize + spacing) + yOffset - cellSize / 2;
+                Vector3 position = new Vector3(xPos, yPos, 0);
+
+                // Tạo ô vuông
+                GameObject square = new GameObject($"Square_{row}_{col}");
                 SpriteRenderer spriteRenderer = square.AddComponent<SpriteRenderer>();
-                spriteRenderer.sprite = squareSprite; 
-                square.transform.position = position; 
+                spriteRenderer.sprite = squareSprite;
+
+                // Cập nhật kích thước ô vuông dựa trên tỷ lệ
+                square.transform.localScale = new Vector3(
+                    cellSize / squareSprite.bounds.size.x,
+                    cellSize / squareSprite.bounds.size.y,
+                    1
+                );
+
+                square.transform.position = position;
                 square.transform.SetParent(_gridParent.transform);
-            }
-        }
-
-        // Đặt gems ngẫu nhiên vào ô vuông
-        PlaceGems(rows, cols, gemCount);
-    }
-
-    void PlaceGems(int rows, int cols, int gemCount)
-    {
-        int placed = 0;
-
-        // Đặt gems ngẫu nhiên
-        while (placed < gemCount)
-        {
-            int randomRow = Random.Range(0, rows);
-            int randomCol = Random.Range(0, cols);
-
-            // Tạo vị trí ngẫu nhiên cho gem, gem sẽ nằm dưới ô vuông
-            Vector3 position = new Vector3(randomCol * spacing, -(randomRow * spacing) - (spacing / 2), 0);
-
-            // Kiểm tra xem vị trí đã có gem chưa
-            bool hasGem = false;
-            foreach (Transform child in _gridParent.transform)
-            {
-                if (child.position == position && child.CompareTag("Gem"))
-                {
-                    hasGem = true;
-                    break;
-                }
-            }
-
-            // tạo gem mới nếu chưa có gem ở vị trí này
-            if (!hasGem)
-            {
-                GameObject gem = new GameObject("Gem_" + randomRow + "_" + randomCol);
-                gem.AddComponent<SpriteRenderer>().sprite = gemSprite;
-                gem.transform.position = position;
-                gem.tag = "Gem";  // Đánh dấu gem là đối tượng gem
-                placed++;
             }
         }
     }
