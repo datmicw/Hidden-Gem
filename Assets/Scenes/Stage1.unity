@@ -131,8 +131,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420720472}
-  - component: {fileID: 420720471}
   - component: {fileID: 420720470}
+  - component: {fileID: 420720471}
   - component: {fileID: 420720473}
   m_Layer: 0
   m_Name: Square
@@ -378,9 +378,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squarePrefab: {fileID: 420720469}
+  gemSprites:
+  - {fileID: 21300000, guid: a5af8fb9f3ba16f4eb509e7408a28389, type: 3}
+  - {fileID: 21300000, guid: 82362031e007a004dbd0d3968d252077, type: 3}
+  - {fileID: 21300000, guid: 1d1a8927dae6d14469aef2401f9e8a78, type: 3}
+  - {fileID: 21300000, guid: a7aa6097dc9f8f545ac5184fc9010527, type: 3}
   framePrefab: {fileID: 1568863921}
   spacing: 0.003
-  tile: 5
+  tile: 4
 --- !u!1 &1568863921
 GameObject:
   m_ObjectHideFlags: 0
