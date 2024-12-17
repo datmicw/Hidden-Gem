@@ -131,9 +131,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420720472}
-  - component: {fileID: 420720470}
   - component: {fileID: 420720471}
   - component: {fileID: 420720473}
+  - component: {fileID: 420720474}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -141,18 +141,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &420720470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420720469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acabe05465db2f74db3972a9e7fdac0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &420720471
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -193,7 +181,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 4eb7c4b654ff86e49934a76b2c620a96, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -241,6 +229,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.375, y: 3.375, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &420720474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420720469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d70103a40d3a1a541b0f5a5ad5e3f365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 1257231212}
   - component: {fileID: 1257231213}
   m_Layer: 0
-  m_Name: Mana
+  m_Name: GridManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -378,11 +378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   squarePrefab: {fileID: 420720469}
-  gemSprites:
-  - {fileID: 21300000, guid: a5af8fb9f3ba16f4eb509e7408a28389, type: 3}
-  - {fileID: 21300000, guid: 82362031e007a004dbd0d3968d252077, type: 3}
-  - {fileID: 21300000, guid: 1d1a8927dae6d14469aef2401f9e8a78, type: 3}
-  - {fileID: 21300000, guid: a7aa6097dc9f8f545ac5184fc9010527, type: 3}
   framePrefab: {fileID: 1568863921}
   spacing: 0.003
   tile: 4
@@ -397,7 +392,7 @@ GameObject:
   - component: {fileID: 1568863923}
   - component: {fileID: 1568863922}
   m_Layer: 0
-  m_Name: Khung
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,7 +438,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 821fde814ecfcd649ba32fbafc6016c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
