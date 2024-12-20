@@ -7,7 +7,7 @@ public class DestroySquare : MonoBehaviour
 
     void OnMouseDown()
     {
-        // Kiểm tra xem đã phát lệnh từ bàn phím trước đó chưa
+        // kiểm tra nếu người dùng có click khôg
         if (Time.time - firstTapTime < tapThreshold)
         {
             Destroy(gameObject);
